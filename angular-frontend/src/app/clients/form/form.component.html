@@ -1,16 +1,23 @@
-<h1 class="mt-4">Client Registration</h1>
+<h1 class="my-4">{{ client.id ? "Edit" : "Register" }} Client</h1>
 <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item">Registration</li>
-    <li class="breadcrumb-item active">Clients</li>
+    <li class="breadcrumb-item">Home</li>
+    <li class="breadcrumb-item">Clients</li>
+    <li class="breadcrumb-item active">
+        {{ client.id ? "Edit" : "New" }} Client
+    </li>
 </ol>
 <div class="container">
     <form #clientForm="ngForm" (ngSubmit)="onSubmit()">
         <div class="row">
             <div class="col-md-6">
-                <div class="alert alert-success" role="alert" *ngIf="success">
-                    Client registered sucessfully!
+                <div class="alert alert-success" role="alert" *ngIf="success && success != ''">
+                    {{ this.success }}
                 </div>
-                <div class="alert alert-danger" role="alert" *ngFor="let error of errors">
+                <div
+                    class="alert alert-danger"
+                    role="alert"
+                    *ngFor="let error of errors"
+                >
                     {{ error }}
                 </div>
             </div>
@@ -20,8 +27,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="name-field">Name*</label>
-                    <input id="name-field" name="name-field" type="text" class="form-control" 
-                        required [(ngModel)]="client.name">
+                    <input
+                        id="name-field"
+                        name="name-field"
+                        type="text"
+                        class="form-control"
+                        required
+                        [(ngModel)]="client.name"
+                    />
                 </div>
             </div>
         </div>
@@ -29,22 +42,94 @@
             <div class="col-md-6">
                 <div class="form-group" *ngIf="client.id != undefined">
                     <label for="id-field">ID</label>
-                    <input id="id-field" name="id-field" type="text" class="form-control" 
-                        disabled [value]="client.id">
+                    <input
+                        id="id-field"
+                        name="id-field"
+                        type="text"
+                        class="form-control"
+                        disabled
+                        [value]="client.id"
+                    />
                 </div>
                 <div class="form-group" *ngIf="client.createdAt != undefined">
                     <label for="date-field">Registration date</label>
-                    <input id="date-field" name="date-field" type="text" class="form-control" 
-                        disabled [value]="client.createdAt">
+                    <input
+                        id="date-field"
+                        name="date-field"
+                        type="text"
+                        class="form-control"
+                        disabled
+                        [value]="client.createdAt"
+                    />
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save mr-2"></i> Create
-                </button>
+            <div class="col-md-6">
+                <div class="d-flex justify-content-between">
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        (click)="clientListButton()"
+                    >
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </button>
+                    <div>
+                        <button
+                            type="button"
+                            class="btn btn-danger mr-2"
+                            data-toggle="modal"
+                            data-target="#modalDelete"
+                            *ngIf="this.client && this.client.id"
+                        >
+                            <i class="fas fa-trash mr-2"></i>Delete
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save mr-2"></i> Save
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
+
+    <div
+        id="modalDelete"
+        class="modal fade"
+        tabindex="-1"
+        aria-labelledby="modalDeleteLabel"
+        aria-hidden="true"
+        role="dialog"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDeleteLabel">
+                        Delete
+                    </h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete item #{{ client.id }}?
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                    >
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteItem()">
+                        <i class="fas fa-trash mr-2"></i>Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

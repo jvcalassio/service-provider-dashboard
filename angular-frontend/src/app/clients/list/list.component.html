@@ -1,0 +1,35 @@
+<h1 class="my-4">Clients</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">Home</li>
+    <li class="breadcrumb-item active">Clients</li>
+</ol>
+<div class="container">
+    <button class="btn btn-secondary" (click)="newClientButton()">
+        <i class="fa fa-plus mr-2"></i> New
+    </button>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Registration date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let client of clients">
+                        <td>
+                            <button class="btn" routerLink="/clients/form/{{ client.id }}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                        <th scope="row">{{ client.id }}</th>
+                        <td>{{ client.name }}</td>
+                        <td>{{ client.createdAt }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

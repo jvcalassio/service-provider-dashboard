@@ -13,4 +13,23 @@ export class ClientsService {
     save(client: Client): Observable<Client> {
         return this.http.post<Client>(environment.CLIENT_API_URL, client);
     }
+
+    findAll(): Observable<Client[]> {
+        return this.http.get<Client[]>(environment.CLIENT_API_URL);
+    }
+
+    findById(id: number): Observable<Client> {
+        return this.http.get<Client>(`${environment.CLIENT_API_URL}/${id}`);
+    }
+
+    update(id: number, newClient: Client): Observable<any> {
+        return this.http.put<Client>(
+            `${environment.CLIENT_API_URL}/${id}`,
+            newClient
+        );
+    }
+
+    delete(id: number): Observable<any> {
+        return this.http.delete<any>(`${environment.CLIENT_API_URL}/${id}`);
+    }
 }
