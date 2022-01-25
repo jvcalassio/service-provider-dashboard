@@ -1,0 +1,50 @@
+<h1 class="mt-4">Client Registration</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">Registration</li>
+    <li class="breadcrumb-item active">Clients</li>
+</ol>
+<div class="container">
+    <form #clientForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="alert alert-success" role="alert" *ngIf="success">
+                    Client registered sucessfully!
+                </div>
+                <div class="alert alert-danger" role="alert" *ngFor="let error of errors">
+                    {{ error }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name-field">Name*</label>
+                    <input id="name-field" name="name-field" type="text" class="form-control" 
+                        required [(ngModel)]="client.name">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group" *ngIf="client.id != undefined">
+                    <label for="id-field">ID</label>
+                    <input id="id-field" name="id-field" type="text" class="form-control" 
+                        disabled [value]="client.id">
+                </div>
+                <div class="form-group" *ngIf="client.createdAt != undefined">
+                    <label for="date-field">Registration date</label>
+                    <input id="date-field" name="date-field" type="text" class="form-control" 
+                        disabled [value]="client.createdAt">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save mr-2"></i> Create
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
